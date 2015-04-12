@@ -1,0 +1,60 @@
+﻿生成启动时间为 2015-4-11 22:30:53。
+     1>项目“C:\Documents and Settings\Administrator\桌面\Ga_Tsp\Ga_Tsp\Ga_Tsp.vcxproj”在节点 2 上(build 个目标)。
+     1>InitializeBuildStatus:
+         正在对“Debug\Ga_Tsp.unsuccessfulbuild”执行 Touch 任务。
+       ClCompile:
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt main.cpp
+         main.cpp
+     1>c:\documents and settings\administrator\桌面\ga_tsp\ga_tsp\main.cpp(9): warning C4244: “参数”: 从“time_t”转换到“unsigned int”，可能丢失数据
+     1>c:\documents and settings\administrator\桌面\ga_tsp\ga_tsp\ga.h(146): warning C4018: “<”: 有符号/无符号不匹配
+                 c:\documents and settings\administrator\桌面\ga_tsp\ga_tsp\ga.h(137): 编译类 模板 成员函数“void GA<Chromosome_type>::test(int)”时
+                 with
+                 [
+                     Chromosome_type=Chromosome_Tsp
+                 ]
+                 c:\documents and settings\administrator\桌面\ga_tsp\ga_tsp\main.cpp(21): 参见对正在编译的类 模板 实例化“GA<Chromosome_type>”的引用
+                 with
+                 [
+                     Chromosome_type=Chromosome_Tsp
+                 ]
+     1>c:\documents and settings\administrator\桌面\ga_tsp\ga_tsp\ga.h(157): warning C4018: “<”: 有符号/无符号不匹配
+     1>c:\documents and settings\administrator\桌面\ga_tsp\ga_tsp\ga.h(93): warning C4018: “<”: 有符号/无符号不匹配
+                 c:\documents and settings\administrator\桌面\ga_tsp\ga_tsp\ga.h(92): 编译类 模板 成员函数“void GA<Chromosome_type>::caculateFitness(std::vector<_Ty> &,std::vector<Chromosome_Tsp> &)”时
+                 with
+                 [
+                     Chromosome_type=Chromosome_Tsp,
+                     _Ty=double
+                 ]
+                 c:\documents and settings\administrator\桌面\ga_tsp\ga_tsp\ga.h(137): 编译类 模板 成员函数“void GA<Chromosome_type>::test(int)”时
+                 with
+                 [
+                     Chromosome_type=Chromosome_Tsp
+                 ]
+     1>c:\documents and settings\administrator\桌面\ga_tsp\ga_tsp\ga.h(106): warning C4018: “<”: 有符号/无符号不匹配
+                 c:\documents and settings\administrator\桌面\ga_tsp\ga_tsp\ga.h(103): 编译类 模板 成员函数“void GA<Chromosome_type>::caculateAccumulate(std::vector<_Ty> &,std::vector<Chromosome_Tsp> &)”时
+                 with
+                 [
+                     Chromosome_type=Chromosome_Tsp,
+                     _Ty=double
+                 ]
+     1>c:\documents and settings\administrator\桌面\ga_tsp\ga_tsp\ga.h(108): warning C4018: “<”: 有符号/无符号不匹配
+       ManifestResourceCompile:
+         所有输出均为最新。
+       Link:
+         c:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Documents and Settings\Administrator\桌面\Ga_Tsp\Debug\Ga_Tsp.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:"Debug\Ga_Tsp.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Documents and Settings\Administrator\桌面\Ga_Tsp\Debug\Ga_Tsp.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Documents and Settings\Administrator\桌面\Ga_Tsp\Debug\Ga_Tsp.lib" /MACHINE:X86 Debug\Ga_Tsp.exe.embed.manifest.res
+         Debug\Chromosome_Tsp.obj
+         Debug\main.obj
+       Manifest:
+         c:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:"Debug\Ga_Tsp.exe.embed.manifest" /manifest Debug\Ga_Tsp.exe.intermediate.manifest
+         所有输出均为最新。
+       LinkEmbedManifest:
+         所有输出均为最新。
+         Ga_Tsp.vcxproj -> C:\Documents and Settings\Administrator\桌面\Ga_Tsp\Debug\Ga_Tsp.exe
+       FinalizeBuildStatus:
+         正在删除文件“Debug\Ga_Tsp.unsuccessfulbuild”。
+         正在对“Debug\Ga_Tsp.lastbuildstate”执行 Touch 任务。
+     1>已完成生成项目“C:\Documents and Settings\Administrator\桌面\Ga_Tsp\Ga_Tsp\Ga_Tsp.vcxproj”(build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:05.76
