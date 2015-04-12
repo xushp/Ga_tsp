@@ -1,4 +1,5 @@
 #include "GA.h"
+#include "Chromosome_Tsp.h"
 #include <time.h>
 #include <iostream>
 #define CITY_CNT	5
@@ -19,6 +20,8 @@ int main()
 	}
 	std::cout << std::endl;
 	GA<Chromosome_Tsp>::test(5);
+    GA<Chromosome_Tsp>::algorithm_action(5, CROSS_RATE,MUTATE_RATE, 5);
+	
 	std::getchar();
 	return 0;
 }

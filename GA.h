@@ -27,8 +27,10 @@ private:
 	static void caculateFitness(std::vector<double> &fitnesses, std::vector<Chromosome_type> &pop);
 	// 计算种群的累积概率
 	static void  caculateAccumulate(std::vector<double> &accumulates, std::vector<Chromosome_type> &pop) ;
-	// 轮盘赌选择一个染色体
+	// 获取最优秀的染色体
 	static int getOptimalChromosome(std::vector<Chromosome_type> &pop) ;
+	// 轮盘赌选择一个染色体
+	static int selectChromosome(std::vector<double> &accumulates);
 };
 /**********************************************
  *	初始化遗传算法的参数
@@ -60,7 +62,7 @@ Chromosome_type GA<Chromosome_type>::algorithm_action(int genetic_genelations, d
 	// 族谱
 	std::vector<std::vector<Chromosome_type> > allPopulation;
 	// 每一代的适应度
-	std::vector<vector<double> > allfitness;
+	std::vector<std::vector<double> > allfitness;
 	// 当代种群
 	std::vector<Chromosome_type> pop;
 	// 当代种群的适应度
@@ -75,12 +77,39 @@ Chromosome_type GA<Chromosome_type>::algorithm_action(int genetic_genelations, d
 		caculateAccumulate(accumulates, pop);
 
 		// 获取精英
+		int optimalIndex = getOptimalChromosome(pop);
+		Chromosome_type optimalChrom = pop[optimalIndex];
 
 		// 轮盘赌选择出新一代的种群
+		std::vector<Chromosome_type> subPop;
+		for (int i = 0; i < popSize; ++i){
+			int index = selectChromosome(accumulates);
+			subPop.push_back(pop[index]);
+		}
+		// 选择两个染色体进行交叉操作
+		for (int i = popSize/2; i > 0; --i){
+			int index1 = rand()%(i*2);
+			int index2 = 0;
+			do {
+				index2 = rand()%(i*2);
+			}while (index1 == index2);
 
+			// 是否有几率交叉
+			double p = rand()*1.0/RAND_MAX;
+			if (p < p_cross){
+				Chromosome_type::cross(subPop[index1], subPop[index2]);
+			}
+			std::swap(subPop[index1], subPop[i*2-1]);
+			std::swap(subPop[index2], subPop[i*2-2]);
+		}
+		// 一代新人换旧人
+		pop = subPop;
+		// 进族谱
+		allPopulation.push_back(pop);
 	}
-
-	return NULL;
+	int optimalIndex = getOptimalChromosome(allPopulation[allPopulation.size()-1]);
+	Chromosome_type optimalChrom = allPopulation[allPopulation.size()-1][optimalIndex];
+	return optimalChrom;
 }
 /**********************************************
  *	计算适应度
@@ -127,7 +156,21 @@ int GA<Chromosome_type>::getOptimalChromosome(std::vector<Chromosome_type> &pop)
 			chrom = pop[i];
 			index = i;
 		}
-	return i;
+	return index;
+}
+/**********************************************
+ *	轮盘赌选择一个染色体
+ * @accumulates: 累积概率
+ * @return: 返回下标
+ */
+template<typename Chromosome_type>
+int GA<Chromosome_type>::selectChromosome(std::vector<double> &accumulates)
+{
+	double rndNum = rand()*1.0/RAND_MAX;
+	int index = -1;
+	while(rndNum > accumulates[++index] );
+	return index;
+	
 }
 /**********************************************
  * 测试
@@ -157,5 +200,7 @@ void  GA<Chromosome_type>::test(int popSize)
 	for (int i = 0; i < pop.size(); i++){
 		std::cout << accumulates[i] << '\t';
 	}
+	std::cout <<std::endl;
+	std::cout << selectChromosome(accumulates) << std::endl;
 }
 #endif

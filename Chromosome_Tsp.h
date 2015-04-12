@@ -28,11 +28,12 @@ public:
 	// 初始化地图
 	static Map_type init_map(int city_cnt);		
 	// 初始化种群
-	static void Chromosome_Tsp::initPopulation(int popSize, std::vector<Chromosome_Tsp> &pop);
+	static void initPopulation(int popSize, std::vector<Chromosome_Tsp> &pop);
+	// 交叉操作
+	static void cross(Chromosome_Tsp& chrom1, Chromosome_Tsp& chrom2);
 	static int city_cnt;
 	static Map_type Map;
 private:
-	
 };
 
 #endif

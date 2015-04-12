@@ -43,6 +43,52 @@ void Chromosome_Tsp::initPopulation(int popSize, std::vector<Chromosome_Tsp> &po
 	delete []arr;
 }
 /****************************************
+ * 交叉操作
+ *@remark:	这个操作将两个输入的染色体进行交叉
+ *			并选取两个适应度最好的染色体在输入
+ *			参数中返回
+ */
+void Chromosome_Tsp::cross(Chromosome_Tsp& chrom1, Chromosome_Tsp& chrom2){
+	// 选择两个交叉点
+	int crossp1 = rand()%city_cnt;
+	int crossp2 = 0;
+	// 这个等下用来求第一第二大的染色体
+	std::vector<Chromosome_Tsp> tmpArr;
+	tmpArr.push_back(chrom1);
+	tmpArr.push_back(chrom2);
+	do {
+		crossp2 = rand()%city_cnt;
+	}while (crossp1 == crossp2);
+	if (crossp1 > crossp2)
+		std::swap(crossp1, crossp2);
+	for (int i = crossp1; i <= crossp2; ++i)
+	{
+		if (chrom1.genes[i] != chrom2.genes[i]){
+			std::vector<int>::iterator it = std::find(chrom2.genes.begin(), chrom2.genes.end(), chrom1.genes[i]);
+			*it = chrom2.genes[i];
+			it = std::find(chrom1.genes.begin(), chrom1.genes.end(), chrom2.genes[i]);
+			*it = chrom1.genes[i];
+			std::swap(chrom1.genes[i], chrom2.genes[i]);
+		}
+	}
+	// 交叉后的也进去
+	tmpArr.push_back(chrom1);
+	tmpArr.push_back(chrom2);
+	// 求第一第二大适应度的染色体
+	chrom1 = tmpArr[0];
+	chrom2 = tmpArr[1];
+	if (chrom1 < chrom2)
+		std::swap(chrom1, chrom2);
+	for (int i = 2; i < tmpArr.size(); ++i)
+	{
+		if (chrom1 < tmpArr[i])
+			chrom1 = tmpArr[i];
+		else if(chrom2 < tmpArr[i])
+			chrom2 = tmpArr[i];
+	}
+	
+}
+/****************************************
  * 初始化地图数据
  */
 Map_type Chromosome_Tsp::init_map(int city_cnt){
