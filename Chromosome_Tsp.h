@@ -14,12 +14,16 @@ typedef std::vector<std::vector<double> >	Map_type;
 
 class Chromosome_Tsp{
 public:
+
 	// 构造函数
 	Chromosome_Tsp();
 	// 适应度计算
 	double fitness() const;
+	// 路径长度
+	double pathlength() const;
 	// 比较操作符
 	bool operator < (const Chromosome_Tsp &chrom) const;
+	friend std::ostream& operator << (std::ostream & out, Chromosome_Tsp&);
 	// 每条染色体的基因
 	std::vector<int>	genes;
 	//////////////////////////////////////
@@ -31,6 +35,8 @@ public:
 	static void initPopulation(int popSize, std::vector<Chromosome_Tsp> &pop);
 	// 交叉操作
 	static void cross(Chromosome_Tsp& chrom1, Chromosome_Tsp& chrom2);
+	// 变异操作
+	static void mutate(Chromosome_Tsp& chrom);
 	static int city_cnt;
 	static Map_type Map;
 private:

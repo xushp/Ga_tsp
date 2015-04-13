@@ -74,19 +74,37 @@ void Chromosome_Tsp::cross(Chromosome_Tsp& chrom1, Chromosome_Tsp& chrom2){
 	// 交叉后的也进去
 	tmpArr.push_back(chrom1);
 	tmpArr.push_back(chrom2);
+
+	
 	// 求第一第二大适应度的染色体
 	chrom1 = tmpArr[0];
 	chrom2 = tmpArr[1];
 	if (chrom1 < chrom2)
 		std::swap(chrom1, chrom2);
-	for (int i = 2; i < tmpArr.size(); ++i)
+	for (size_t i = 2; i < tmpArr.size(); ++i)
 	{
-		if (chrom1 < tmpArr[i])
+		if (chrom1 < tmpArr[i]){
+			chrom2 = chrom1;
 			chrom1 = tmpArr[i];
+		}
 		else if(chrom2 < tmpArr[i])
 			chrom2 = tmpArr[i];
 	}
-	
+}
+
+/****************************************
+ * 变异操作
+ *@remark: 对换变异，选取两个变异点，交换对应得基因				
+ */
+void Chromosome_Tsp::mutate(Chromosome_Tsp& chrom){
+	Chromosome_Tsp pre = chrom;
+	int index1 = rand()%city_cnt;
+	int index2 = 0;
+	do {
+		index2 = rand()%city_cnt;
+	}while(index2 == index1);
+	std::swap(chrom.genes[index1], chrom.genes[index2]);
+	chrom = std::max(pre, chrom);
 }
 /****************************************
  * 初始化地图数据
@@ -103,12 +121,25 @@ Map_type Chromosome_Tsp::init_map(int city_cnt){
  * 计算染色体的适应度
  */
 double Chromosome_Tsp::fitness()const{
+	return 1.0/pathlength();
+}
+/****************************************
+ * 路径长度
+ */
+double Chromosome_Tsp::pathlength()const{
 	double ret = 0.0;
 	for (int i = 0; i < Chromosome_Tsp::city_cnt-1; i++)
 		ret += Chromosome_Tsp::Map[this->genes[i]][this->genes[i+1]];
-	return 1.0/ret;
+	return ret;
 }
 
 bool Chromosome_Tsp::operator<(const Chromosome_Tsp &chrom)const{
 	return this->fitness() < chrom.fitness();
+}
+
+std::ostream& operator<<(std::ostream &out, Chromosome_Tsp &chrom){
+	for (size_t i = 0; i < chrom.genes.size()-1; ++i)
+		out << chrom.genes[i] << ' ';
+	out << chrom.genes[chrom.genes.size()-1];
+	return out;
 }
