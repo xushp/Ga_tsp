@@ -20,7 +20,7 @@ public:
 	static std::vector<std::vector<Chromosome_type> > algorithm_action(int genetic_genelations, double p_cross, double p_mutate, int popSize);
 	// 获取最优秀的染色体
 	static int getOptimalChromosome(std::vector<Chromosome_type> &pop) ;
-	// 获取最优秀的染色体
+	// 获取最垃圾的染色体
 	static int getWorstChromosome(std::vector<Chromosome_type> &pop) ;
 	// 统计
 	static void statistic(std::vector<std::vector<Chromosome_type> > allPopulation);
@@ -94,22 +94,9 @@ std::vector<std::vector<Chromosome_type> > GA<Chromosome_type>::algorithm_action
 			int index = selectChromosome(accumulates);
 			subPop.push_back(pop[index]);
 		}
-		// 选择两个染色体进行交叉操作
-		for (int i = popSize/2; i > 0; --i){
-			int index1 = rand()%(i*2);
-			int index2 = 0;
-			do {
-				index2 = rand()%(i*2);
-			}while (index1 == index2);
+		// 交叉操作
+		Chromosome_type::popCross(subPop, p_cross);
 
-			// 是否有几率交叉
-			double p = rand()*1.0/RAND_MAX;
-			if (p < p_cross){
-				Chromosome_type::cross(subPop[index1], subPop[index2]);
-			}
-			std::swap(subPop[index1], subPop[i*2-1]);
-			std::swap(subPop[index2], subPop[i*2-2]);
-		}
 		// 变异
 		for (int i = 0; i < popSize; i++)
 		{

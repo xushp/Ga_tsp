@@ -6,13 +6,14 @@
 //	Comment : 基因遗传算法中，tsp问题的相关类，染色体以及相关操作
 //			  这是实现的文件
 //
-//////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+#include "stdafx.h"
 #include "Chromosome_Tsp.h"
 #include <time.h>
 #include <stdlib.h>
 #include <iostream>
 #include <algorithm>
-
+#define _max(a, b)	(((a) < (b))? (b) : (a))
 void init_map(){
 }
 Chromosome_Tsp::Chromosome_Tsp(){
@@ -41,6 +42,29 @@ void Chromosome_Tsp::initPopulation(int popSize, std::vector<Chromosome_Tsp> &po
 		pop.push_back(chrom);
 	}
 	delete []arr;
+}
+/****************************************
+ *	种群交叉
+ *@pop: 种群
+ *@pCross: 交叉概率
+ */
+void Chromosome_Tsp::popCross(std::vector<Chromosome_Tsp>&pop, double p_cross){
+	int popSize = pop.size();
+	for (int i = popSize/2; i > 0; --i){
+			int index1 = rand()%(i*2);
+			int index2 = 0;
+			do {
+				index2 = rand()%(i*2);
+			}while (index1 == index2);
+
+			// 是否有几率交叉
+			double p = rand()*1.0/RAND_MAX;
+			if (p < p_cross){
+				cross(pop[index1], pop[index2]);
+			}
+			std::swap(pop[index1], pop[i*2-1]);
+			std::swap(pop[index2], pop[i*2-2]);
+		}
 }
 /****************************************
  * 交叉操作
@@ -104,7 +128,7 @@ void Chromosome_Tsp::mutate(Chromosome_Tsp& chrom){
 		index2 = rand()%city_cnt;
 	}while(index2 == index1);
 	std::swap(chrom.genes[index1], chrom.genes[index2]);
-	chrom = std::max(pre, chrom);
+	chrom = _max(pre, chrom);
 }
 /****************************************
  * 初始化地图数据
@@ -130,6 +154,7 @@ double Chromosome_Tsp::pathlength()const{
 	double ret = 0.0;
 	for (int i = 0; i < Chromosome_Tsp::city_cnt-1; i++)
 		ret += Chromosome_Tsp::Map[this->genes[i]][this->genes[i+1]];
+	ret += Chromosome_Tsp::Map[this->genes[Chromosome_Tsp::city_cnt-1]][0];
 	return ret;
 }
 
